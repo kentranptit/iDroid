@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "825429467412",
+    "firebase_url": "https://sing-now-80870.firebaseio.com",
+    "project_id": "sing-now-80870",
+    "storage_bucket": "sing-now-80870.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825429467412:android:561ce64589444d5a",
+        "android_client_info": {
+          "package_name": "com.idroid.pakandroid.ptit.singnow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825429467412-t9pldt4ao7vufjna76rvoc8gll548grd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.idroid.pakandroid.ptit.singnow",
+            "certificate_hash": "df65addc056f600c4594b73b9017c1f7ae3d4a46"
+          }
+        },
+        {
+          "client_id": "825429467412-m8n1b4aqb1s077ocg3s4321ud6dgcf78.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbViZ1GqvewPD6CkVLicAWWIxYmzD3BiI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825429467412-m8n1b4aqb1s077ocg3s4321ud6dgcf78.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

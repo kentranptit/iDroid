@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'MyAndroidKey'
+            keyPassword '20061997'
+            storeFile file('C:/Users/admin/.android/keystores/android.jks')
+            storePassword '24071997'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.idroid.pakandroid.ptit.singnow"
@@ -14,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     sourceSets {
@@ -32,4 +41,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
+    compile 'com.google.firebase:firebase-database:11.8.0'
+    compile 'com.google.firebase:firebase-auth:11.8.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
