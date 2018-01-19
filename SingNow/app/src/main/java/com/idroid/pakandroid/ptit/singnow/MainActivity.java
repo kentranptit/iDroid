@@ -25,8 +25,7 @@ import java.io.IOException;
 
 public class MainActivity extends YouTubeBaseActivity {
     Button play, start, stop;
-    YouTubePlayerView mYoutubePlayerView;
-    YouTubePlayer.OnInitializedListener mOnInitializedListener;
+    VideoView karaokeView;
     private MediaRecorder myAudioRecorder;
     private String outputFile = null;
     private boolean permissionToRecordAccepted = false;
@@ -44,23 +43,10 @@ public class MainActivity extends YouTubeBaseActivity {
         play = findViewById(R.id.btn_play_record);
         stop = findViewById(R.id.btn_stop_record);
         start = findViewById(R.id.btn_start_record);
-        mYoutubePlayerView = (YouTubePlayerView) findViewById(R.id.video_karaoke);
-        mOnInitializedListener = new YouTubePlayer.OnInitializedListener(){
-
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                // link video o day
-                youTubePlayer.loadVideo("gNr4_kPjMEY");
-            }
-
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-            }
-        };
+        karaokeView = findViewById(R.id.video_karaoke);
         stop.setEnabled(false);
         play.setEnabled(false);
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
+        outputFile = getSDCardDirectory() + "/recording123.3gp";
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,60 +58,65 @@ public class MainActivity extends YouTubeBaseActivity {
                     myAudioRecorder.setOutputFile(outputFile);
                     myAudioRecorder.prepare();
                     myAudioRecorder.start();
-                    mYoutubePlayerView.initialize(YoutubeConfig.getApiKey(),mOnInitializedListener);
+
+
                 }
                 catch (Exception e){
                     e.printStackTrace();
                 }
+                playVideoOffline();
                 stop.setEnabled(true);
                 start.setEnabled(false);
                 Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_LONG).show();
             }
         });
-       stop.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               try{
-                   myAudioRecorder.stop();
-                   myAudioRecorder.release();
-                   myAudioRecorder = null;
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    myAudioRecorder.stop();
+
+                    myAudioRecorder.release();
+                    myAudioRecorder = null;
 
 
-               }catch (Exception e){
-                   e.printStackTrace();
-               }
-               stop.setEnabled(false);
-               play.setEnabled(true);
-               Toast.makeText(getApplicationContext(), "Audio recorded successfully",Toast.LENGTH_LONG).show();
-           }
-       });
-       play.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               MediaPlayer m = new MediaPlayer();
-               try {
-                   m.setDataSource(outputFile);
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-               try {
-                   m.prepare();
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-               m.start();
-               Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_LONG).show();
-               m.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                   @Override
-                   public void onCompletion(MediaPlayer mediaPlayer) {
-                       Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_LONG).show();
-                       start.setEnabled(true);
-                       stop.setEnabled(false);
-                       play.setEnabled(false);
-                   }
-               });
-           }
-       });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                karaokeView.stopPlayback();
+                stop.setEnabled(false);
+                play.setEnabled(true);
+                Toast.makeText(getApplicationContext(), "Audio recorded successfully",Toast.LENGTH_LONG).show();
+            }
+        });
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                play.setEnabled(false);
+                MediaPlayer m = new MediaPlayer();
+                try {
+                    m.setDataSource(outputFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    m.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                m.start();
+                Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_LONG).show();
+                m.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        Toast.makeText(getApplicationContext(), "Done", Toast.LENGTH_LONG).show();
+                        start.setEnabled(true);
+                        stop.setEnabled(false);
+                        play.setEnabled(false);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -140,5 +131,19 @@ public class MainActivity extends YouTubeBaseActivity {
         if (!permissionToRecordAccepted ) MainActivity.super.finish();
         if (!permissionToWriteAccepted ) MainActivity.super.finish();
     }
-
+    private void playVideoOffline(){
+        String videoPath = "android.resource://"+getPackageName()+"/"+R.raw.karaoke;
+        Uri uri = Uri.parse(videoPath);
+        karaokeView.setVideoURI(uri);
+        karaokeView.start();
+    }
+    public String getSDCardDirectory(){
+        String SdcardPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString();
+        String dir = SdcardPath.substring(SdcardPath.lastIndexOf('/') + 1);
+        System.out.println(dir);
+        String[] trimmed = SdcardPath.split(dir);
+        String sdcardPath = trimmed[0];
+        System.out.println(sdcardPath);
+        return sdcardPath;
+    }
 }
