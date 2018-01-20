@@ -94,8 +94,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void swapToMain() {
-        Intent swapToMainIntent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(swapToMainIntent);
+        Intent swapToListSongIntent = new Intent(LoginActivity.this, ShowListSongActivity.class);
+        startActivity(swapToListSongIntent);
         finish();
     }
 }

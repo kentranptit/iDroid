@@ -6,5 +6,5 @@ package com.idroid.pakandroid.ptit.singnow;
 
 public interface IGiaoTiep {
     void downloadVideo(String title);
-    void swapActivity();
+    void swapActivity(String data);
 }

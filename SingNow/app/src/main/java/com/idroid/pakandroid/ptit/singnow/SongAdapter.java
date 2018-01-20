@@ -37,19 +37,19 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.txtName.setText(myList.get(position).getName());
         holder.txtSinger.setText(myList.get(position).getSinger());
+        final String title = myList.get(position).getName() + "_" + myList.get(position).getSinger() + ".MP4";
         holder.btnListen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(myContext, "Nghe thu", Toast.LENGTH_SHORT).show();
-                String title = myList.get(position).getName() + "_" + myList.get(position).getSinger() + ".MP4";
+                Toast.makeText(myContext, "Nghe thử", Toast.LENGTH_SHORT).show();
                 myIGiaoTiep.downloadVideo(title);
             }
         });
         holder.btnRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(myContext, "Ghi am", Toast.LENGTH_SHORT).show();
-                myIGiaoTiep.swapActivity();
+                Toast.makeText(myContext, "Ghi âm", Toast.LENGTH_SHORT).show();
+                myIGiaoTiep.swapActivity(title);
             }
         });
     }

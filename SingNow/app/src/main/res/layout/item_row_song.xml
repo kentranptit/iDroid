@@ -32,16 +32,20 @@
         android:id="@+id/buttonRecord"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="8dp"
         android:drawableRight="@drawable/icon_micro"
         android:text="Ghi âm  "
         app:layout_constraintBottom_toTopOf="@+id/buttonListen"
         app:layout_constraintEnd_toEndOf="@+id/buttonListen"
+        app:layout_constraintStart_toStartOf="@+id/buttonListen"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonListen"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="24dp"
         android:drawableRight="@drawable/icon_big_headphones"
         android:text="Nghe thử  "

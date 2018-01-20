@@ -10,51 +10,151 @@
         android:id="@+id/btn_start_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
         android:text="Start"
-        app:layout_constraintBottom_toTopOf="@+id/video_karaoke"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_stop_record"
         app:layout_constraintEnd_toStartOf="@+id/btn_stop_record"
-        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/btn_stop_record" />
 
     <Button
         android:id="@+id/btn_stop_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="8dp"
         android:text="Stop"
         app:layout_constraintBottom_toTopOf="@+id/video_karaoke"
         app:layout_constraintEnd_toStartOf="@+id/btn_play_record"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.502" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_start_record"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonReplay" />
 
     <Button
         android:id="@+id/btn_play_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginTop="8dp"
         android:text="play"
-        app:layout_constraintBottom_toTopOf="@+id/video_karaoke"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_stop_record"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_stop_record"
+        app:layout_constraintTop_toTopOf="@+id/btn_stop_record" />
 
     <VideoView
         android:id="@+id/video_karaoke"
         android:layout_width="match_parent"
-        android:layout_height="262dp"
-        android:layout_marginBottom="28dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <SeekBar
+        android:id="@+id/seekBarSong"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonReplay"
+        app:layout_constraintEnd_toStartOf="@+id/txt_timeTotal"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txt_timeSong"
+        app:layout_constraintTop_toBottomOf="@+id/txt_songTitle" />
+
+    <TextView
+        android:id="@+id/txt_timeSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="00:00"
+        app:layout_constraintBottom_toBottomOf="@+id/seekBarSong"
+        app:layout_constraintEnd_toStartOf="@+id/seekBarSong"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/seekBarSong" />
+
+    <TextView
+        android:id="@+id/txt_timeTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="00:00"
+        app:layout_constraintBottom_toBottomOf="@+id/seekBarSong"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/seekBarSong"
+        app:layout_constraintTop_toTopOf="@+id/seekBarSong" />
+
+    <ImageButton
+        android:id="@+id/imageButtonPlay"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:background="@null"
+        android:src="@drawable/icon_play_button"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonStop"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonStop"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/txt_timeSong"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonStop" />
+
+    <ImageButton
+        android:id="@+id/imageButtonStop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:src="@drawable/icon_stop_button"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonReplay"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonReplay"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonPlay"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonReplay" />
+
+    <ImageButton
+        android:id="@+id/imageButtonReplay"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:src="@drawable/icon_replay_button"
+        app:layout_constraintBottom_toTopOf="@+id/btn_stop_record"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonSave"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonStop"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarSong" />
+
+    <TextView
+        android:id="@+id/txt_songTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:gravity="center"
+        android:text="Song Title"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/seekBarSong"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButtonSave"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:src="@drawable/icon_save_files"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonReplay"
+        app:layout_constraintEnd_toEndOf="@+id/txt_timeTotal"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonReplay"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonReplay" />
 
 </android.support.constraint.ConstraintLayout>

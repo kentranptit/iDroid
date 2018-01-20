@@ -96,7 +96,7 @@ public class ShowListSongActivity extends AppCompatActivity implements IGiaoTiep
     }
 
     private void addData() {
-        Song song = new Song("Người lạ ơi", "Superbrothers x Karik x Orange", "https://firebasestorage.googleapis.com/v0/b/sing-now-80870.appspot.com/o/Ng%C6%B0%E1%BB%9Di%20l%E1%BA%A1%20%C6%A1i_Superbrothers%20x%20Karik%20x%20Orange.MP4?alt=media&token=2c10101e-d3b9-43aa-a501-edc28ff6c4cf");
+        Song song = new Song("Gió Vẫn Hát", "Long Phạm", "https://firebasestorage.googleapis.com/v0/b/sing-now-80870.appspot.com/o/Gi%C3%B3%20V%E1%BA%ABn%20H%C3%A1t_Long%20Ph%E1%BA%A1m.MP4?alt=media&token=a3ab42a6-aebb-4f37-8490-6ec7393a8c7a");
         mData.child("Songs").push().setValue(song, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -114,7 +114,7 @@ public class ShowListSongActivity extends AppCompatActivity implements IGiaoTiep
         httpsReference.child(title).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Toast.makeText(ShowListSongActivity.this, "Download thanh cong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShowListSongActivity.this, "Tải thành công", Toast.LENGTH_SHORT).show();
                 MediaController mediaController = new MediaController(ShowListSongActivity.this);
                 mediaController.setAnchorView(videoView);
                 videoView.setMediaController(mediaController);
@@ -129,14 +129,15 @@ public class ShowListSongActivity extends AppCompatActivity implements IGiaoTiep
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(ShowListSongActivity.this, "That bai", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShowListSongActivity.this, "Tải thất bại!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
-    public void swapActivity() {
+    public void swapActivity(String data) {
         Intent swapToMainActIntent = new Intent(ShowListSongActivity.this, MainActivity.class);
+        swapToMainActIntent.putExtra("TITLE", data);
         startActivity(swapToMainActIntent);
     }
 }
