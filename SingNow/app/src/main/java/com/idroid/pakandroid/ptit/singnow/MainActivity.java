@@ -1,12 +1,16 @@
 package com.idroid.pakandroid.ptit.singnow;
 
+import android.content.pm.PackageInfo;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -18,7 +22,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+import com.facebook.FacebookSdk;
 
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -26,10 +34,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 
+
+
 public class MainActivity extends YouTubeBaseActivity implements IGiaoTiep {
-    Button play, start, stop;
+    Button play, start, stop, share;
     ImageButton btnPlay, btnStop, btnReplay, btnSave;
     TextView txtTimeSong, txtTimeTotal, txtSongTitle;
     VideoView karaokeView;
@@ -46,11 +58,17 @@ public class MainActivity extends YouTubeBaseActivity implements IGiaoTiep {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         int requestCode = 200;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, requestCode);
         }
+        play = findViewById(R.id.btn_play_record);
+        stop = findViewById(R.id.btn_stop_record);
+        start = findViewById(R.id.btn_start_record);
+        share = findViewById(R.id.share);
+        karaokeView = findViewById(R.id.video_karaoke);
         mapping();
         stop.setEnabled(false);
         play.setEnabled(false);
@@ -136,6 +154,33 @@ public class MainActivity extends YouTubeBaseActivity implements IGiaoTiep {
                 });
             }
         });
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareLinkContent content = new ShareLinkContent.Builder()
+                        .setContentUrl(Uri.parse("https://developers.facebook.com"))
+                        .build();
+                ShareDialog shareDialog = new ShareDialog(MainActivity.this);
+                shareDialog.show(content);
+            }
+        });
+        try {
+            PackageInfo info = null;
+            try {
+                info = getPackageManager().getPackageInfo(
+                        "com.idroid.pakandroid.ptit.singnow",
+                        PackageManager.GET_SIGNATURES);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (NoSuchAlgorithmException e) {
+
+        }
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

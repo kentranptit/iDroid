@@ -7,4 +7,5 @@
     <string name="password">Password</string>
     <string name="confirmpw">Confirm password</string>
     <string name="signup_title">SIGN UP</string>
+    <string name="facebook_app_id">159946921298336</string>
 </resources>
