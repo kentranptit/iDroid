@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -14,10 +16,12 @@ import java.util.ArrayList;
  */
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
+    IGiaoTiep myIGiaoTiep;
     ArrayList<Song> myList;
     Context myContext;
 
-    public SongAdapter(ArrayList<Song> myList, Context myContext) {
+    public SongAdapter(IGiaoTiep myIGiaoTiep, ArrayList<Song> myList, Context myContext) {
+        this.myIGiaoTiep = myIGiaoTiep;
         this.myList = myList;
         this.myContext = myContext;
     }
@@ -30,9 +34,24 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.txtName.setText(myList.get(position).getName());
         holder.txtSinger.setText(myList.get(position).getSinger());
+        holder.btnListen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(myContext, "Nghe thu", Toast.LENGTH_SHORT).show();
+                String title = myList.get(position).getName() + "_" + myList.get(position).getSinger() + ".MP4";
+                myIGiaoTiep.downloadVideo(title);
+            }
+        });
+        holder.btnRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(myContext, "Ghi am", Toast.LENGTH_SHORT).show();
+                myIGiaoTiep.swapActivity();
+            }
+        });
     }
 
     @Override
@@ -42,11 +61,14 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtName, txtSinger;
+        Button btnRecord, btnListen;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.textViewTitle);
             txtSinger = itemView.findViewById(R.id.textViewSinger);
+            btnRecord = itemView.findViewById(R.id.buttonRecord);
+            btnListen = itemView.findViewById(R.id.buttonListen);
         }
     }
 }

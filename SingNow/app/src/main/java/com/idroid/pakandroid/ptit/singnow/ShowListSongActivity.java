@@ -1,5 +1,6 @@
 package com.idroid.pakandroid.ptit.singnow;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,13 +29,13 @@ import java.util.ArrayList;
  * Created by admin on 1/20/2018.
  */
 
-public class ShowListSongActivity extends AppCompatActivity {
+public class ShowListSongActivity extends AppCompatActivity implements IGiaoTiep {
     ArrayList<Song> listSong;
     SongAdapter adapter;
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     DatabaseReference mData;
-    FirebaseStorage storage = FirebaseStorage.getInstance("gs://sing-now-80870.appspot.com");
+    FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference httpsReference = storage.getReference();
 
     VideoView videoView;
@@ -46,13 +47,12 @@ public class ShowListSongActivity extends AppCompatActivity {
 
         init();
 
-        adapter = new SongAdapter(listSong, getApplicationContext());
+        adapter = new SongAdapter(ShowListSongActivity.this, listSong, getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(false);
 
 //        addData();
         loadSongData();
-        downloadVideo();
     }
 
     private void init() {
@@ -70,7 +70,6 @@ public class ShowListSongActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Song song = dataSnapshot.getValue(Song.class);
                 listSong.add(new Song(song.getName(), song.getSinger(), song.getLink()));
-                httpsReference = storage.getReferenceFromUrl(song.getLink()+"");
                 adapter.notifyDataSetChanged();
             }
 
@@ -97,7 +96,7 @@ public class ShowListSongActivity extends AppCompatActivity {
     }
 
     private void addData() {
-        Song song = new Song("Người lạ ơi", "Superbrothers x Karik x Orange", "https://firebasestorage.googleapis.com/v0/b/sing-now-80870.appspot.com/o/Nguoi_la_oi_Superbrothers_Karik_Orange_Beat.MP4?alt=media&token=b38a122a-8136-4399-b44e-2a5c1583d53f");
+        Song song = new Song("Người lạ ơi", "Superbrothers x Karik x Orange", "https://firebasestorage.googleapis.com/v0/b/sing-now-80870.appspot.com/o/Ng%C6%B0%E1%BB%9Di%20l%E1%BA%A1%20%C6%A1i_Superbrothers%20x%20Karik%20x%20Orange.MP4?alt=media&token=2c10101e-d3b9-43aa-a501-edc28ff6c4cf");
         mData.child("Songs").push().setValue(song, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -110,8 +109,9 @@ public class ShowListSongActivity extends AppCompatActivity {
         });
     }
 
-    private void downloadVideo() {
-        httpsReference.child("Nguoi_la_oi_Superbrothers_Karik_Orange_Beat.MP4").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+    @Override
+    public void downloadVideo(String title) {
+        httpsReference.child(title).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Toast.makeText(ShowListSongActivity.this, "Download thanh cong", Toast.LENGTH_SHORT).show();
@@ -129,8 +129,14 @@ public class ShowListSongActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+                Toast.makeText(ShowListSongActivity.this, "That bai", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void swapActivity() {
+        Intent swapToMainActIntent = new Intent(ShowListSongActivity.this, MainActivity.class);
+        startActivity(swapToMainActIntent);
     }
 }
