@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.MediaController;
@@ -59,6 +60,7 @@ public class ShowListSongActivity extends AppCompatActivity implements IGiaoTiep
         recyclerView = findViewById(R.id.recyclerView_song);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
         listSong = new ArrayList<>();
         videoView = findViewById(R.id.videoView);
         mData = FirebaseDatabase.getInstance().getReference();

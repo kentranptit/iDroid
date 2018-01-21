@@ -22,22 +22,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Stop"
-        app:layout_constraintBottom_toTopOf="@+id/video_karaoke"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_play_record"
         app:layout_constraintEnd_toStartOf="@+id/btn_play_record"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_start_record"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonReplay" />
+        app:layout_constraintTop_toTopOf="@+id/btn_play_record" />
 
     <Button
         android:id="@+id/btn_play_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="play"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_stop_record"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/video_karaoke"
+        app:layout_constraintEnd_toStartOf="@+id/share"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_stop_record"
-        app:layout_constraintTop_toTopOf="@+id/btn_stop_record" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonReplay" />
 
     <VideoView
         android:id="@+id/video_karaoke"
@@ -55,17 +55,15 @@
         style="@style/com_facebook_button_share"
         android:layout_width="88dp"
         android:layout_height="28dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
         android:text="@string/com_facebook_share_button_text"
         android:textAlignment="center"
         android:textColor="@color/cardview_light_background"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_play_record"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_stop_record"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_play_record"
+        app:layout_constraintTop_toTopOf="@+id/btn_play_record"
         tools:background="@drawable/com_facebook_button_like_background" />
 
     <android.support.constraint.Guideline
@@ -142,7 +140,7 @@
         android:layout_height="50dp"
         android:background="@null"
         android:src="@drawable/icon_replay_button"
-        app:layout_constraintBottom_toTopOf="@+id/btn_stop_record"
+        app:layout_constraintBottom_toTopOf="@+id/btn_play_record"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonSave"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageButtonStop"
